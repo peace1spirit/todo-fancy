@@ -10,8 +10,9 @@ const isLogin = (req, res, next) => {
          .then(result=>{  
             console.log(result.email)
             req.curent_user_id=result._id; 
-            req.params.decoded=decoded
-            req.body.decoded = decoded
+
+            //req.params.decoded=decoded
+            //req.body.decoded = decoded
             next()
          })
          .catch(err=>{

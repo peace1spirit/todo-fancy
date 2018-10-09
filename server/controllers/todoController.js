@@ -64,7 +64,7 @@ class TodoController{
         //console.log(req.params.id)
         if(req.body.completed){    
             //update completed
-            TodoModel.findOneAndUpdate({_id:req.params.id},{completed:true})
+            TodoModel.findOneAndUpdate({_id:req.params.id, iduser:req.curent_user_id},{completed:true})
             .then(result=>{
                 console.log(result)
                     res.status(200).json({data:result}) 
@@ -73,7 +73,7 @@ class TodoController{
                 res.status(500).json({ message: err.message})
             })  
          }
-         else
+         else 
          {  //update task
             // let obj={};
             // Object.assign(obj, 
@@ -83,11 +83,7 @@ class TodoController{
             //     )
             var temp=req.body.date.split("/"); //tampung untuk tanggal
             //console.log(`${temp[2]}/${parseInt(temp[1])}/${temp[0]}`)
-            //req.body.date=`${temp[2]}/${temp[0]}/${temp[1]}`
-            //console.log(`${temp[2]}/${(parseInt(temp[1]))}/${temp[0]}`)
-            //console.log('date:' + new Date(Date.UTC(temp[2],parseInt(temp[1])-1)),temp[0])
-            //console.log(req.params.id)
-            TodoModel.findOneAndUpdate({ _id: req.params.id },{
+            TodoModel.findOneAndUpdate({ _id:req.params.id, iduser:req.curent_user_id },{
                 title: req.body.title,
                 task: req.body.task,
                 date: new Date(Date.UTC(temp[2],parseInt(temp[0])-1,temp[1]))

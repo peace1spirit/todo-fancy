@@ -17,7 +17,6 @@ class UserController{
     static loginG(req,res,next){
         var googleToken= req.body.googleToken;
                 //console.log('jalan')
-    
                 axios({
                     method:'GET',
                     url:`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${googleToken}`
@@ -64,7 +63,44 @@ class UserController{
           
 
      }
-    
+     static logindb(req,res,next){
+        console.log(req.body.email)
+        console.log(req.body.password)
+        UserModel.findOne({email:req.body.email,password:req.body.password})
+        .then(result=>{
+            if(result){
+                console.log(result.name +' ' +result.email)
+                const payload={
+                    name: result.name, 
+                    email: result.email
+                };   
+                let token=jwt.sign(payload,process.env.SECRET_KEY)
+                res.status(200).json({token:token})                  
+            }
+            else{
+                res.status(200).json({token:null})
+            }
+        })
+        .catch(err=>{
+            res.status(500).json({message:err.message})
+        })
+                    
+     }
+    static register(req,res,next){
+        console.log('regiter controller')
+        UserModel.create({ //jika register
+            name: req.body.name, 
+            email: req.body.email,
+            password: req.body.password,
+            oauth: 0
+        })
+        .then(result=>{
+             res.status(200).json({data:result}) 
+        })      
+        .catch(err=>{
+            res.status(500).json({message:err.message})
+        })           
+    }
   
 }
 

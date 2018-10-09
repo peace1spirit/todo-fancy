@@ -12,3 +12,19 @@
 | /api/users/signup/       | POST   | register new user        |
 
 
+ ##/api/todos/
+data.todos
+{
+  title: 'input data task',
+  task: 'input data task',
+  date: input Date,
+  iduser: input iduser,
+  completed: true/false
+}
+## /api/users/signup/ 
+data.users
+{
+  name:'input data name',
+  email:'input data email' ,
+  password: 'input data password'
+}
